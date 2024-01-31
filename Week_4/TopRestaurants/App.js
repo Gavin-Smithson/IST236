@@ -65,22 +65,24 @@ export default function App() {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    backgroundColor: '#84f5d4',
+    backgroundColor: '#5af7e7',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 40
   },
   titleContainer: {
     flex: 1,
-    backgorundColor: "white",
+    backgroundColor: "#555555",
     justifyContent: 'center',
     marginBottom: 20,
     paddingHorizontal: 5,
-    borderWidth: 5,
+    borderWidth: 4,
+    borderColor: "black",
     borderRadius: 10,
   },
   title: {
-
+    fontSize: 40,
+    color: "#fff",
   },
   listContainer: {
     flex: 8,

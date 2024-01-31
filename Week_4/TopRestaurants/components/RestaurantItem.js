@@ -25,11 +25,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   titleContainer: {
-    backgroundColor: "white",
+    backgroundColor: "#555555",
     borderWidth: 3,
     borderRadius: 5,
   },
   itemTitle: {
+    color: "#fff",
     fontSize: 30,
     textAlign: "center",
   },
@@ -44,11 +45,12 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   ratingContainer: {
-    backgroundColor: "white",
+    backgroundColor: "#555555",
     borderWidth: 3,
     borderRadius: 5,
   },
   itemRating: {
+    color: "#fff",
     fontSize: 30,
     textAlign: "center",
   },
