@@ -3,21 +3,21 @@ import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomeScreen from "./screens/HomeScreen";
-import EventScreen from "./screens/EventScreen";
+import MenuScreen from "./screens/MenuScreen";
 import { useFonts } from "expo-font";
 import Colors from "./constants/colors.js";
 
 export default function App() {
   //Set up our custom fonts
   const [fontsLoaded] = useFonts({
-    "squealer": require("./assets/fonts/Squealer.otf"),
-    "squealer-embossed": require("./assets/fonts/SquealerEmbossed.otf"),
+    "Minecraft": require("./assets/fonts/Minecraft.otf"),
+    "MinecraftBold": require("./assets/fonts/MinecraftBold.otf"),
   });
 
   // Set state variable for the current screen
   const [currentScreen, setCurrentScreen] = useState("home");
 
-  function EventScreenHandler() {
+  function MenuScreenHandler() {
     setCurrentScreen("event");
   }
 
@@ -26,10 +26,10 @@ export default function App() {
   }
 
   // Determine which screen to be on
-  let screen = <HomeScreen onNext={EventScreenHandler} />;
+  let screen = <HomeScreen onNext={MenuScreenHandler} />;
 
   if (currentScreen === "event") {
-    screen = <EventScreen onNext={HomeScreenHandler} />;
+    screen = <MenuScreen onNext={HomeScreenHandler} />;
   }
 
   return (
