@@ -16,15 +16,14 @@ function TodoLists() {
   }
   const toggleOverdue =  () => {
     setOverdueCollapsed(!overdueCollapsed);
-    console.log("Hello");
   }
   const toggleToday =  () => {
     setTodayCollapsed(!todayCollapsed);
   }
 
-    const overdueArrow = overdueCollapsed  ? '▲' : '▼';
-    const completedArrow = completedCollapsed ? '▲' : '▼';
-    const todayArrow = todayCollapsed ? '▲' : '▼';
+    const overdueArrow = overdueCollapsed  ? '▼' : '▲';
+    const completedArrow = completedCollapsed ? '▼' : '▲';
+    const todayArrow = todayCollapsed ? '▼' : '▲';
 
   return (
     <>
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
   },
   collapsibleTitle: {
     fontSize: 18, 
-    fontWeight: 'bold', 
+    fontFamily: 'GothamBold',
     color: Colors.accent800,
     paddingTop: 10, 
     paddingBottom: 5, 

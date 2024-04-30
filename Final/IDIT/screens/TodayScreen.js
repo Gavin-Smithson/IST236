@@ -6,31 +6,10 @@ import AddTaskButton from '../components/AddTaskButton';
 import Colors from '../constants/colors';
 
 function TodoLists() {
-
-  const [completedCollapsed, setCompletedCollapsed] = useState(false);
-  const [overdueCollapsed, setOverdueCollapsed] = useState(true);
-  const [todayCollapsed, setTodayCollapsed] = useState(false);
-
-  const toggleCompleted =  () => {
-    setCompletedCollapsed(!completedCollapsed);
-  }
-  const toggleOverdue =  () => {
-    setOverdueCollapsed(!overdueCollapsed);
-    console.log("Hello");
-  }
-  const toggleToday =  () => {
-    setTodayCollapsed(!todayCollapsed);
-  }
-
-    const overdueArrow = overdueCollapsed  ? '▲' : '▼';
-    const completedArrow = completedCollapsed ? '▲' : '▼';
-    const todayArrow = todayCollapsed ? '▲' : '▼';
-
   return (
     <>
     <View style={styles.container}>
         <TaskList filter="Due Today" /> 
-
       <AddTaskButton />
       </View>
     </>
@@ -51,7 +30,7 @@ const styles = StyleSheet.create({
   },
   collapsibleTitle: {
     fontSize: 18, 
-    fontWeight: 'bold', 
+    fontFamily: 'GothamBold',
     color: Colors.accent800,
     paddingTop: 10, 
     paddingBottom: 5, 

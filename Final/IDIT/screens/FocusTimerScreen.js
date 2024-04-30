@@ -8,7 +8,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
-  Platform
+  Platform,
 } from "react-native";
 
 function CalendarScreen() {
@@ -45,17 +45,22 @@ function CalendarScreen() {
 
   //  Function to handle setting the countdown
   const handleSetCountdown = (value) => {
-    const numericValue = parseInt(value, 10);
-    if (!isNaN(numericValue)) {
-      setCountdown(numericValue);
-      setTimer(numericValue * 60);
+    if (value === "") {
+      setCountdown("");
+      setTimer(0);
+    } else {
+      const numericValue = parseInt(value, 10);
+      if (!isNaN(numericValue)) {
+        setCountdown(numericValue.toString());
+        setTimer(numericValue * 60);
+      }
     }
   };
   // Function to format the time
   const formatTime = (totalSeconds) => {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
   // Function to dismiss the keyboard
@@ -63,7 +68,7 @@ function CalendarScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
-      <KeyboardAvoidingView 
+      <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
@@ -71,15 +76,22 @@ function CalendarScreen() {
           <View style={styles.timerContainer}>
             <Text style={styles.timerText}>{formatTime(timer)}</Text>
           </View>
-            <TextInput
-              style={styles.input}
-              onChangeText={handleSetCountdown}
-              value={countdown.toString()}
-              keyboardType="numeric"
-              onSubmitEditing={dismissKeyboard}
-            />
-          <Button title={isRunning ? "Stop" : "Start"} onPress={handleStartStop} />
-          <Button title="Reset" onPress={handleReset} />
+          <TextInput
+            style={styles.input}
+            onChangeText={handleSetCountdown}
+            value={countdown.toString()}
+            keyboardType="numeric"
+            onSubmitEditing={dismissKeyboard}
+          />
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ marginRight: 10 }}>
+              <Button
+                title={isRunning ? "Stop" : "Start"}
+                onPress={handleStartStop}
+              />
+            </View>
+            <Button title="Reset" onPress={handleReset} />
+          </View>
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
@@ -106,6 +118,10 @@ const styles = StyleSheet.create({
   timerText: {
     fontSize: 60,
     color: "white",
+    fontFamily: "GothamBold",
+    textShadowColor: "rgba(0, 0, 0, 0.35)",
+    textShadowOffset: { width: -10, height: -1 },
+    textShadowRadius: 35,
   },
   input: {
     height: 40,
@@ -114,6 +130,7 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     width: 300,
+    fontFamily: "GothamLight",
   },
 });
 

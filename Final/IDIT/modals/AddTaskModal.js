@@ -6,23 +6,22 @@ import {
   KeyboardAvoidingView,
   Platform,
   Text,
-  Button
+  Button,
 } from "react-native";
 import { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
-import FIREBASE_DB from "../firebaseConfig"
+import FIREBASE_DB from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
 import { set } from "firebase/database";
 
 function AddTaskModal(props) {
-
   // Create states for holding data for the database
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [taskPriority, setTaskPriority] = useState("Low");
   const [taskDueDate, setTaskDueDate] = useState(new Date());
-
+  const [showDatePicker, setShowDatePicker] = useState(false); 
 
   // Function for adding a todo
   const addTask = async () => {
@@ -54,7 +53,7 @@ function AddTaskModal(props) {
             value={taskName}
             placeholder="Task Name"
             placeholderTextColor="#ccc"
-            autoFocus={true} 
+            autoFocus={true}
           />
           <TextInput
             style={styles.input}
@@ -64,16 +63,43 @@ function AddTaskModal(props) {
             placeholderTextColor="#ccc"
           />
           <Text style={styles.label}>Due Date</Text>
-          <DateTimePicker
-            style={styles.dateTimePicker}
-            value={taskDueDate}
-            mode="date"
-            display="default"
-            onChange={(event, selectedDate) => {
-              const currentDate = selectedDate || taskDueDate;
-              setTaskDueDate(currentDate);
-            }}
-          />
+          {/* Android Calendar Display */}
+          {Platform.OS === "android" && (
+            <>
+              {showDatePicker && (
+                <DateTimePicker
+                  style={styles.dateTimePicker}
+                  value={taskDueDate}
+                  mode="date"
+                  display="calendar"
+                  onChange={(event, selectedDate) => {
+                    setShowDatePicker(false);
+                    if (selectedDate) {
+                      setTaskDueDate(selectedDate);
+                    }
+                  }}
+                />
+              )}
+              <Button
+                title="Select Date"
+                onPress={() => setShowDatePicker(true)}
+              />
+            </>
+          )}
+
+          {/* IOS Calendar Display */}
+          {Platform.OS === "ios" && (
+            <DateTimePicker
+              style={styles.dateTimePicker}
+              value={taskDueDate}
+              mode="date"
+              display="default"
+              onChange={(event, selectedDate) => {
+                const currentDate = selectedDate || taskDueDate;
+                setTaskDueDate(currentDate);
+              }}
+            />
+          )}
           <Text style={styles.label}>Priority</Text>
           <Picker
             style={styles.picker}
@@ -81,13 +107,20 @@ function AddTaskModal(props) {
             onValueChange={(itemValue) => setTaskPriority(itemValue)}
             itemStyle={styles.pickerItem}
           >
-            <Picker.Item label="Low" value="low" />
-            <Picker.Item label="Medium" value="medium" />
-            <Picker.Item label="High" value="high" />
+            <Picker.Item label="Low" value="Low" />
+            <Picker.Item label="Medium" value="Medium" />
+            <Picker.Item label="High" value="High" />
           </Picker>
-          <Button style={styles.button} title="Add Task" onPress={() => addTask()} />
-          <Button style={styles.button} title="Close" onPress={() => props.toggleModal()} />
-
+          <Button
+            style={styles.button}
+            title="Add Task"
+            onPress={() => addTask()}
+          />
+          <Button
+            style={styles.button}
+            title="Close"
+            onPress={() => props.toggleModal()}
+          />
         </View>
       </KeyboardAvoidingView>
     </Modal>
@@ -97,11 +130,11 @@ function AddTaskModal(props) {
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: "flex-end", 
+    justifyContent: "flex-end",
   },
   modalView: {
-    width: "100%", 
-    backgroundColor: "#333", 
+    width: "100%",
+    backgroundColor: "#333",
     padding: 20,
     shadowColor: "#000",
     shadowOffset: {
@@ -115,21 +148,22 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
   },
   input: {
-    backgroundColor: "#555", 
-    color: "white", 
+    backgroundColor: "#555",
+    color: "white",
     marginBottom: 15,
     paddingHorizontal: 10,
     height: 50,
     borderRadius: 5,
-    width: "100%", 
+    width: "100%",
+    fontFamily: "GothamBold",
   },
   dateTimePicker: {
-    width: "100%", 
-    backgroundColor: "#444", 
+    width: "100%",
+    backgroundColor: "#444",
     color: "white",
   },
   picker: {
-    width: "100%", 
+    width: "100%",
     backgroundColor: "#444",
     color: "white",
     paddingTop: 0,
@@ -137,7 +171,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   pickerItem: {
-    color: "white", 
+    color: "white",
     height: 60,
   },
   label: {

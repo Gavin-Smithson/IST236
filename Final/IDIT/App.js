@@ -36,7 +36,7 @@ function DrawerNavigator() {
         headerStyle: { backgroundColor: Colors.primary500 },
         headerTintColor: "white",
         headerTitleStyle: {
-          fontFamily: "roboto",
+          fontFamily: "GothamLight",
           fontSize: 30,
           color: Colors.accent800,
         },
@@ -135,7 +135,8 @@ function TabsNavigator() {
 export default function App() {
   // Set Up Custom Fonts
   const [fontsLoaded, fontError] = useFonts({
-    roboto: require("./assets/fonts/Roboto.ttf"),
+    GothamBold: require("./assets/fonts/GothamBold.ttf"),
+    GothamLight: require("./assets/fonts/GothamLight.ttf"),
   });
 
   // Wait and load all of the fonts for application
